@@ -38,9 +38,9 @@
 
 </head>
 
-<body ng-controller="DashboardCtrl">
+<body>
 
-    <div id="wrapper" ng-init="init();">
+    <div id="wrapper">
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -55,8 +55,8 @@
             </div>
             <!-- /.navbar-header -->
 
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
+            <div class="navbar-default sidebar" role="navigation" ng-controller="SideMenuCtrl">
+                <div class="sidebar-nav navbar-collapse" ng-init="init();">
                     <ul class="nav" id="side-menu">
                         <div class="profile-sidebar">
                             <!-- SIDEBAR USERPIC -->
@@ -95,14 +95,36 @@
             <!-- /.navbar-static-side -->
         </nav>
 
-        <div id="page-wrapper">
-            <div class="row">
+        <div id="page-wrapper" ng-controller="DashboardCtrl">
+            <div class="row" ng-init="getCourses();">
                 <div class="col-lg-12">
                     <h1 class="page-header">Dashboard</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
+            
+            <div class="row">
+                <div class="col-lg-12">
+                <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-list-alt fa-fw"></i> My Courses
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-item-course" ng-repeat="(key, value) in courses">
+                                    <i class="fa fa-users fa-fw"></i> {{key}} ({{value.courseName}})
+                                     <button type="submit" class="btn btn-default btn-sm pull-right" ng-click="deleteCourse(key);">Delete Course</button>
+                                </a>
+                            </div>
+                            <!-- /.list-group -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+            </div>
             
             
         </div>

@@ -13,15 +13,17 @@ var starter = angular.module('starter', ['ui.router', 'firebase'])
     
     .state('dashboard', {
         url: '/dashboard',
-        templateUrl: 'pages/dashboard.html',
-        controller: 'DashboardCtrl'
+        templateUrl: 'pages/dashboard.html'
     })
     
     .state('create-course', {
         url: '/create-course',
-        templateUrl: 'pages/create-course.html',
-        controller: 'DashboardCtrl'
+        templateUrl: 'pages/create-course.html'
     })
+    .state('edit-course', {
+        url: '/edit-course?courseCode',
+        templateUrl: 'pages/edit-course.html'
+    });
     
     
     $urlRouterProvider.otherwise('/signin');

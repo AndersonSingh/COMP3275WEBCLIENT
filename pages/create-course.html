@@ -38,9 +38,9 @@
 
 </head>
 
-<body ng-controller="DashboardCtrl">
+<body>
 
-    <div id="wrapper" ng-init="init();">
+    <div id="wrapper">
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -55,8 +55,8 @@
             </div>
             <!-- /.navbar-header -->
 
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
+            <div class="navbar-default sidebar" role="navigation" ng-controller="SideMenuCtrl">
+                <div class="sidebar-nav navbar-collapse" ng-init="init();">
                     <ul class="nav" id="side-menu">
                         <div class="profile-sidebar">
                             <!-- SIDEBAR USERPIC -->
@@ -95,7 +95,7 @@
             <!-- /.navbar-static-side -->
         </nav>
 
-        <div id="page-wrapper">
+        <div id="page-wrapper" ng-controller="CreateCourseCtrl">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Create Course</h1>
@@ -142,8 +142,12 @@
                                 <input type="time" class="form-control" ng-model="lecture.end">
                             </div>
                             <div class="form-group col-lg-2">
-                                <label>Remove Lecture</label>
-                                <button type="submit" class="btn btn-default" ng-click="removeLectureRow($index);">Delete Lecture</button>
+                                <div class="row">
+                                    <label>Remove Lecture</label>
+                                </div>
+                                <div class="row">
+                                    <button type="submit" class="btn btn-default" ng-click="removeLectureRow($index);">Delete Lecture</button>
+                                </div>
                             </div>
                         </div>
                         
