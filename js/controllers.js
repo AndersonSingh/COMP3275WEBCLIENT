@@ -160,6 +160,8 @@ starter.controller('SignInCtrl',['$scope', '$state', function($scope, $state) {
             'lectures' : courseSchedule,
             'students' : studentsData
         });
+        
+        $state.go('dashboard');
     };
     
     
