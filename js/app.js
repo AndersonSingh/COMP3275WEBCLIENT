@@ -21,7 +21,7 @@ var starter = angular.module('starter', ['ui.router', 'firebase'])
         templateUrl: 'pages/create-course.html'
     })
     .state('edit-course', {
-        url: '/edit-course?courseCode',
+        url: '/edit-course',
         templateUrl: 'pages/edit-course.html'
     });
     

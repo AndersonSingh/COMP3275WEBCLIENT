@@ -1,4 +1,4 @@
-starter.controller('SignInCtrl',['$scope', '$state', function($scope, $state){
+starter.controller('SignInCtrl',['$scope', '$state', function($scope, $state) {
     
 
     var ref = new Firebase("https://comp3275.firebaseio.com");
@@ -46,28 +46,32 @@ starter.controller('SignInCtrl',['$scope', '$state', function($scope, $state){
     
     $scope.user = null; 
     
-    $scope.courseName = null; 
+    $scope.courseName = null;
     $scope.courseCode = null;
     $scope.courseSchedule = [];
-    $scope.courses = null; 
+    $scope.courses = null;
     
-    $scope.studentsCSV = null; 
+    $scope.studentsCSV = null;
     
 
     /* function to list all courses on dashboard. */
     $scope.getCourses = function(){
         var authData = JSON.parse(localStorage.getItem('firebase:session::comp3275'));
         var uid = authData['uid'];
-        $scope.courses = $firebaseObject(ref.child('/courses/' + uid));
+        $scope.courses = $firebaseObject(ref.child('/lecturers/' + uid));
     };
     
+    $scope.sayHi = function(key){
+      $state.go('edit-course',{'courseCode':key});
+        
+    };
     /* firebase delete course */
     $scope.deleteCourse = function(courseCode){
 
         var authData = JSON.parse(localStorage.getItem('firebase:session::comp3275'));
         var uid = authData['uid'];
         
-        var deleteRef = ref.child('/courses/' + uid + '/' + courseCode);
+        var deleteRef = ref.child('/lecturers/' + uid + '/' + courseCode);
         deleteRef.remove(function(error){
             
             if(error){
@@ -99,29 +103,35 @@ starter.controller('SignInCtrl',['$scope', '$state', function($scope, $state){
     
     /* create a course for a lecturer. */
     $scope.createCourse = function(){
+        var day = ["Mon", "Tue", "Wed" ,"Thu" ,"Fri" ,"Sat"];
+        var fullDay = ["Monday" ,"Tuesday" ,"Wednesday","Thursday","Friday","Saturday"]
         
         var authData = JSON.parse(localStorage.getItem('firebase:session::comp3275'));
         var uid = authData['uid'];
         
-        var courseRef = ref.child('/courses/' + uid + '/' + $scope.courseCode); 
+        var courseRef = ref.child('/lecturers/' + uid + '/' + $scope.courseCode); 
         
         
         /* parse times for course schedule inorder to push to firebase. */
-        var courseSchedule = [];
+        var courseSchedule = [{}];
         
         for(var i = 0; i < $scope.courseSchedule.length; i++){
-            courseSchedule.push({});
-            courseSchedule[i]['day'] = $scope.courseSchedule[i]['day'];
+            courseSchedule.push();
+            var daynum = $scope.courseSchedule[i]['day'];
+            var stime = $scope.courseSchedule[i]['start'].getHours();
+            var key = day[daynum]+" "+stime;
+            //vat zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+            courseSchedule[key]={"day" : fullDay[parseInt(daynum)],
             
             /* get the starting hour and minutes of the class. */
-            courseSchedule[i]['startHr'] = $scope.courseSchedule[i]['start'].getHours();
-            courseSchedule[i]['startMin'] = $scope.courseSchedule[i]['start'].getMinutes();
+            "startHr" : $scope.courseSchedule[i]['start'].getHours(),
+            "startMin" : $scope.courseSchedule[i]['start'].getMinutes(),
             
             /* get the ending hour and minutes of the class. */
-            courseSchedule[i]['endHr'] = $scope.courseSchedule[i]['end'].getHours();
-            courseSchedule[i]['endMin'] = $scope.courseSchedule[i]['end'].getMinutes();
+            "endHr" : $scope.courseSchedule[i]['end'].getHours(),
+            "endMin" : $scope.courseSchedule[i]['end'].getMinutes()};
         }
-        
+        var s = {"d":"d"}
         /* student ids */
         var studentIDsArray = $scope.studentsCSV.split(",");
         
@@ -142,7 +152,7 @@ starter.controller('SignInCtrl',['$scope', '$state', function($scope, $state){
                 studentsData[id]['name'] = name;
             }
         }
-        
+        console.log(courseSchedule);
         //console.log(studentIDsArray);
         courseRef.set({
             'courseName' : $scope.courseName,

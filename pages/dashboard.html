@@ -113,8 +113,8 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group">
-                                <a href="#" class="list-group-item list-item-course" ng-repeat="(key, value) in courses">
-                                    <i class="fa fa-users fa-fw"></i> {{key}} ({{value.courseName}})
+                                <a href="#"  ng-click= "sayHi(key);" class="list-group-item list-item-course" ng-repeat="(key, value) in courses">
+                                    <i ui-sref="edit-course" class="fa fa-users fa-fw"></i> Course Code:{{key}} <br> Course Name:{{value.courseName}}
                                      <button type="submit" class="btn btn-default btn-sm pull-right" ng-click="deleteCourse(key);">Delete Course</button>
                                 </a>
                             </div>
